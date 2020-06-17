@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MessageRequest;
 use App\Message;
+use App\Notifications\MessageSent;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -48,6 +49,11 @@ class MessageController extends Controller
             'receiver_id' => $request->receiver_id,
             'content' => $request->content,
         ]);
+
+        // Find Receiver
+        $receiver = User::find($request->receiver_id);
+
+        $receiver->notify(new MessageSent($message));
 
         return back()->withSuccess('Mensaje enviado correctamente a: '.$message->receiver->name);
     }
