@@ -11,10 +11,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    
+    <!-- Iconos de font-awesome -->
+    <script src="https://kit.fontawesome.com/cdea7f1aec.js" crossorigin="anonymous"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -53,9 +52,9 @@
                                 <a href="{{ route('messages.create') }}" class="nav-link">Send Message</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    Notification
-                                    @if ($count = auth()->user()->notifications->count())
+                                <a href="{{ route('notifications.index') }}" class="nav-link">
+                                    <i class="fas fa-bell"></i>
+                                    @if ($count = auth()->user()->unreadNotifications->count())
                                         <span class="badge badge-danger">{{ $count }}</span>
                                     @endif
                                 </a>
