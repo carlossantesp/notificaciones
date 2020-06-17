@@ -33,6 +33,7 @@ class MessageSent extends Notification
     public function via($notifiable)
     {
         return ['database'];
+        // return ['mail','database'];
     }
 
     /**
@@ -43,10 +44,14 @@ class MessageSent extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        // return (new MailMessage)
+        //             ->line('Ha recibido un mensaje de la aplicacion')
+        //             ->action('Ingresar a la notificacion', route('messages.show',$this->message->id))
+        //             ->line('Gracias por usar nuestra aplicacion!');
+        return (new MailMessage)->view('emails.email',[
+            'msg' => $this->message,
+            'user' => $notifiable
+        ])->subject('Tiene un nuevo mensaje de la aplicacion');
     }
 
     /**
