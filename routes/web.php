@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('messages','MessageController')->only(['create','store','show']);
+Route::resource('posts','PostController')->only(['index','show']);
 
 Route::get('notifications', 'NotificationController@index')->name('notifications.index');
 Route::put('notifications/{id}','NotificationController@read')->name('notifications.read');

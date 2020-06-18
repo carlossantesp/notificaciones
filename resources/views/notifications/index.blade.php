@@ -17,7 +17,7 @@
                             </div>
                             <p class="mb-1">{{ Str::limit($unreadNotification->data['content']) }}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small>Enviado por: {{ $unreadNotification->data['sender_user'] }}</small>
+                                <small>Por: {{ $unreadNotification->data['user'] }}</small>
                                 <form action="{{ route('notifications.read', $unreadNotification->id) }}" method="POST">
                                     @method('PUT')
                                     @csrf
@@ -48,7 +48,7 @@
                             </div>
                             <p class="mb-1">{{ Str::limit($readNotification->data['content']) }}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small>Enviado por: {{ $readNotification->data['sender_user'] }}</small>
+                                <small>Por: {{ $readNotification->data['user'] }}</small>
                                 <form action="{{ route('notifications.destroy', $readNotification->id) }}" method="POST">
                                     @method('DELETE')
                                     @csrf

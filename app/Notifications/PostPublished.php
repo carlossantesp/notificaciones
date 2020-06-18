@@ -2,26 +2,25 @@
 
 namespace App\Notifications;
 
-use App\Message;
+use App\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MessageSent extends Notification
+class PostPublished extends Notification
 {
     use Queueable;
 
-    protected $message;
-    
+    protected $post;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct(Post $post)
     {
-        $this->message = $message;
+        $this->post = $post;
     }
 
     /**
@@ -32,8 +31,8 @@ class MessageSent extends Notification
      */
     public function via($notifiable)
     {
+        // return ['mail'];
         return ['database'];
-        // return ['mail','database'];
     }
 
     /**
@@ -44,14 +43,11 @@ class MessageSent extends Notification
      */
     public function toMail($notifiable)
     {
-        // return (new MailMessage)
-        //             ->line('Ha recibido un mensaje de la aplicacion')
-        //             ->action('Ingresar a la notificacion', route('messages.show',$this->message->id))
-        //             ->line('Gracias por usar nuestra aplicacion!');
-        return (new MailMessage)->view('emails.email',[
-            'msg' => $this->message,
-            'user' => $notifiable
-        ])->subject('Tiene un nuevo mensaje de la aplicacion');
+        return (new MailMessage)
+                    ->subject('Nuevo post publicado')
+                    ->line($notifiable->name.' hemos publicado un nuevo post')
+                    ->action($this->post->title , route('posts.show',$this->post->id))
+                    ->line('Gracias por leernos!');
     }
 
     /**
@@ -63,11 +59,11 @@ class MessageSent extends Notification
     public function toArray($notifiable)
     {
         return [
-            'link' => route('messages.show',$this->message->id),
-            'text' => 'Recibo un nuevo mensaje',
+            'link' => route('posts.show',$this->post->id),
+            'text' => 'Se publico un nuevo post',
             'create_day' => now()->diffForHumans(),
-            'content' => $this->message->content,
-            'user' => $this->message->sender->name
+            'content' => $this->post->title,
+            'user' => $this->post->user->name
         ];
     }
 }

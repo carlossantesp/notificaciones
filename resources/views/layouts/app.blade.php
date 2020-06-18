@@ -49,6 +49,9 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a href="{{ route('posts.index') }}" class="nav-link">Posts</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('messages.create') }}" class="nav-link">Send Message</a>
                             </li>
                             <li class="nav-item">
