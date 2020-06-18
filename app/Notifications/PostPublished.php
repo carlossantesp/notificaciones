@@ -60,7 +60,7 @@ class PostPublished extends Notification
     {
         return [
             'link' => route('posts.show',$this->post->id),
-            'text' => 'Se publico un nuevo post',
+            'text' => 'Se publico un nuevo post: '. $this->post->title,
             'create_day' => now()->diffForHumans(),
             'content' => $this->post->title,
             'user' => $this->post->user->name

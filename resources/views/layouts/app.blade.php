@@ -54,14 +54,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('messages.create') }}" class="nav-link">Send Message</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('notifications.index') }}" class="nav-link">
-                                    <i class="fas fa-bell"></i>
-                                    @if ($count = auth()->user()->unreadNotifications->count())
-                                        <span class="badge badge-danger">{{ $count }}</span>
-                                    @endif
-                                </a>
-                            </li>
+                            <notifications-component></notifications-component>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

@@ -14,6 +14,9 @@ class NotificationController extends Controller
 
     public function index()
     {
+        if(request()->ajax()){
+            return auth()->user()->unreadNotifications->take(5);
+        }
         return view('notifications.index', [
             'unreadNotifications' => auth()->user()->unreadNotifications,
             'readNotifications' => auth()->user()->readNotifications,
@@ -23,14 +26,16 @@ class NotificationController extends Controller
     public function read($id)
     {
         DatabaseNotification::find($id)->markAsRead();
-
-        return redirect()->route('notifications.index')->withSuccess('El mensaje fue marcado como leido');
+        if(request()->ajax()){
+            return auth()->user()->unreadNotifications->take(5);
+        }
+        return back()->withSuccess('El mensaje fue marcado como leido');
     }
 
     public function destroy($id)
     {
         DatabaseNotification::findOrFail($id)->delete();
 
-        return redirect()->route('notifications.index')->withSuccess('El mensaje fue eliminado correctamente');
+        return back()->withSuccess('El mensaje fue eliminado correctamente');
     }
 }

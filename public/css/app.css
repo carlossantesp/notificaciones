@@ -10928,3 +10928,7 @@ a.text-dark:focus {
   }
 }
 
+.notifications.dropdown-toggle::after {
+  display: none;
+}
+

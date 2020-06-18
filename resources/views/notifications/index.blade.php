@@ -19,7 +19,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <small>Por: {{ $unreadNotification->data['user'] }}</small>
                                 <form action="{{ route('notifications.read', $unreadNotification->id) }}" method="POST">
-                                    @method('PUT')
+                                    @method('PATCH')
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-link">
                                         <i class="fas fa-check"></i>
